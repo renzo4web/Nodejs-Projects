@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         max: 1024,
         min: 6,
+        bcrypt: true
     },
     date: {
         type: Date,
@@ -28,5 +29,4 @@ const userSchema = new mongoose.Schema({
     }
 
 })
-
 module.exports= mongoose.model('User',userSchema)
