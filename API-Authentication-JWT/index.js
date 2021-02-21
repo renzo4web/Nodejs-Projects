@@ -3,8 +3,8 @@ const app = express()
 const mongoose= require("mongoose")
 const dotenv  = require("dotenv")
 // import routes
-autRoute = require("./routes/auth")
-
+const autRoute = require("./routes/auth")
+const postRoute =  require("./routes/posts")
 dotenv.config()
 
 
@@ -20,15 +20,8 @@ mongoose.connect(urlMongo, options).then(r => {
 // Middleware parse the request body
 app.use(express.json())
 
-
-
-
-
-
-
-
-
 // Route middlewares
 // all routes have this prefix "/api/user"
 app.use("/api/user", autRoute)
+app.use("/api/post", postRoute)
 app.listen(3000, () => console.log("Server Running"))
