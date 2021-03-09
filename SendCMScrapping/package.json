@@ -1,0 +1,16 @@
+{
+  "name": "Web-Scraping",
+  "version": "1.0.0",
+  "description": "My First Scrapper in Node",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^8.0.0",
+    "scrape-it": "^5.3.1"
+  }
+}
