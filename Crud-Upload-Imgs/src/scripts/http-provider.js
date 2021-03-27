@@ -1,6 +1,7 @@
 const usersUrl = 'https://reqres.in/api/users?page=2';
+const urlCRUD = 'https://reqres.in/api/users';
 
-const getUser = async () => {
+const getTableUsers = async () => {
   try {
     const resp = await fetch(usersUrl);
     const {data} = await resp.json();
@@ -12,6 +13,19 @@ const getUser = async () => {
   }
 };
 
+const getUser = async (id) => {
+
+  try {
+    const resp = await fetch(`${urlCRUD}/${id}`);
+    const {data: user} = await resp.json();
+    return user;
+  } catch (e) {
+    return {};
+  }
+
+};
+
 export {
-  getUser,
+  getTableUsers,
+    getUser
 };
