@@ -25,7 +25,66 @@ const getUser = async (id) => {
 
 };
 
+const postUser = async (name, job) => {
+
+  const user = {name, job};
+
+  try {
+
+    const req = await fetch(urlCRUD, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    });
+    const body = await req.json();
+    console.log(body);
+    return body;
+  } catch (e) {
+    console.warn(e);
+  }
+
+};
+
+const updateUser = async (id, name, job) => {
+  const user = {name, job};
+
+  try {
+    const req = await fetch(`${urlCRUD}/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    });
+
+    const body = await req.json();
+    console.log(body);
+    return body;
+  } catch (e) {
+    console.warn(e);
+  }
+
+};
+
+const deleteUser = async (id) => {
+
+  try {
+    const res = await fetch(`${urlCRUD}/${id}`, {
+      method: 'DELETE',
+    });
+    return res.ok;
+  } catch (e) {
+    return {};
+  }
+
+};
+
 export {
   getTableUsers,
-    getUser
+  getUser,
+  postUser,
+  updateUser,
+  deleteUser,
 };

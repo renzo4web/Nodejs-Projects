@@ -1,7 +1,20 @@
-import {getTableUsers, getUser} from './http-provider';
-import {createBtns, createUserLisTable, domInputId} from './dom-components';
+import {
+  deleteUser,
+  getTableUsers,
+  getUser,
+  postUser,
+  updateUser,
+} from './http-provider';
+import {
+  addToContainerDom,
+  createBtns,
+  createUserLisTable,
+  domInputId,
+  domPostUser,
+} from './dom-components';
 
-let containerUsersTable, btnUser, btnGetUser, btnForm, idInput;
+let containerUsersTable, btnUser, btnGetUser, btnForm, idInput, btnPostUser,
+    btnUpdateUser, btnDeleteUser;
 
 const addUserToDom = (users) => {
 
@@ -39,7 +52,8 @@ const handler = async (event) => {
     }
   }
 
-  if (btnClicked.id === 'btn-getUser') {
+  if (btnClicked.id === 'btn-getUser' || btnClicked.id === 'btn-deleteUser') {
+    console.log(btnClicked.id);
     domInputId();
 
     btnForm = document.getElementById('get-user-form');
@@ -49,9 +63,12 @@ const handler = async (event) => {
 
       e.preventDefault();
       try {
-        const {id, email, first_name, avatar} = await getUser(idInput.value);
 
-        const html = `
+        if (btnClicked.id === 'btn-getUser') {
+
+          const {id, email, first_name, avatar} = await getUser(idInput.value);
+
+          const html = `
           <tr>
             <td>${id}</td>
             <td>${email}</td>
@@ -59,9 +76,98 @@ const handler = async (event) => {
             <td> <img src="${avatar}" alt="user avatar"></td>
           </tr>
         `;
+          if (!containerUsersTable) {
+            createUserLisTable(['id', ' email', ' name', ' avatar']);
+            containerUsersTable = document.querySelector(
+                '.container-user-list');
+          }
+          containerUsersTable.innerHTML += html;
+        } else {
+          const res = await deleteUser(idInput.value);
+          console.log(res);
+          const html = (res)
+              ? `<h3>User id:${idInput.value} deleted</h3>`
+              : `<h3>User id:${idInput.value} not found</h3>`;
+
+          addToContainerDom(html);
+        }
+
+      } catch (e) {
+        console.warn(e);
+      }
+    };
+
+    btnForm.addEventListener('submit', inputFormHandler);
+
+  }
+
+  if (btnClicked.id === 'btn-postUser') {
+
+    domPostUser();
+    btnForm = document.getElementById('get-user-form');
+
+    const inputFormHandler = async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById('username');
+      const jobInput = document.getElementById('job');
+
+      try {
+
+        const {name, job, id, createdAt} = await postUser(username.value,
+            jobInput.value);
+        const html = `
+          <tr>
+            <td>${id}</td>
+            <td>${name}</td>
+            <td>${job}</td>
+            <td>${createdAt}</td>
+          </tr>
+        `;
 
         if (!containerUsersTable) {
-          createUserLisTable();
+          createUserLisTable(['id', 'name', 'job', 'createdAt']);
+          containerUsersTable = document.querySelector('.container-user-list');
+        }
+        containerUsersTable.innerHTML += html;
+
+      } catch (e) {
+        console.warn(e);
+      }
+    };
+
+    btnForm.addEventListener('submit', inputFormHandler);
+
+  }
+
+  if (btnClicked.id === 'btn-updateUser') {
+
+    domPostUser('withId');
+    btnForm = document.getElementById('get-user-form');
+
+    const inputFormHandler = async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById('username');
+      const jobInput = document.getElementById('job');
+      const idInput = document.getElementById('input-id');
+
+      try {
+
+        const {name, job, updatedAt} = await updateUser(idInput.value,
+            username.value,
+            jobInput.value);
+        const html = `
+          <tr>
+            <td>${idInput.value}</td>
+            <td>${name}</td>
+            <td>${job}</td>
+            <td>${updatedAt}</td>
+          </tr>
+        `;
+
+        if (!containerUsersTable) {
+          createUserLisTable(['id', 'name', 'job', 'update at']);
           containerUsersTable = document.querySelector('.container-user-list');
         }
         containerUsersTable.innerHTML += html;
@@ -80,8 +186,14 @@ const handler = async (event) => {
 const events = () => {
   btnUser = document.getElementById('btn-getTableUsers');
   btnGetUser = document.getElementById('btn-getUser');
+  btnPostUser = document.getElementById('btn-postUser');
+  btnUpdateUser = document.getElementById('btn-updateUser');
+  btnDeleteUser = document.getElementById('btn-deleteUser');
   btnUser.addEventListener('click', handler);
   btnGetUser.addEventListener('click', handler);
+  btnPostUser.addEventListener('click', handler);
+  btnUpdateUser.addEventListener('click', handler);
+  btnDeleteUser.addEventListener('click', handler);
 };
 
 export const init = () => {
