@@ -189,11 +189,14 @@ const events = () => {
   btnPostUser = document.getElementById('btn-postUser');
   btnUpdateUser = document.getElementById('btn-updateUser');
   btnDeleteUser = document.getElementById('btn-deleteUser');
-  btnUser.addEventListener('click', handler);
-  btnGetUser.addEventListener('click', handler);
-  btnPostUser.addEventListener('click', handler);
-  btnUpdateUser.addEventListener('click', handler);
-  btnDeleteUser.addEventListener('click', handler);
+  [
+    btnUser,
+    btnGetUser,
+    btnPostUser
+    , btnUpdateUser
+    , btnDeleteUser,
+  ].forEach(btn => btn.addEventListener('click', handler));
+
 };
 
 export const init = () => {

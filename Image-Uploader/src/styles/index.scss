@@ -1,0 +1,30 @@
+$body-color: slateblue;
+
+.box__dragndrop,
+.box__uploading,
+.box__success,
+.box__error {
+  display: none;
+}
+
+body {
+  color: $body-color;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  text-align: center;
+}
+
+.box__input {
+  display: flex;
+  flex-direction: column;
+}
+
+.box__file {
+  margin: 2em 0;
+  padding: 4em;
+  background-color: aqua;
+}

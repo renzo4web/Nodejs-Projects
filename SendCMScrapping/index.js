@@ -8,13 +8,15 @@ const login = async (page, url, password) => {
   await page.waitForSelector("input[name='fld_passwd']", {
     visible: true, // delay we need to wait for the input
   });
-  // password Input
-  console.log('TYPING PASSWORD.....');
-  await page.type("input[name='fld_passwd']", password, {
-    delay: 200,
-  });
-  await page.click("button[name='verifyPass']");
-  // get data
+  if (password) {
+    // password Input
+    console.log('TYPING PASSWORD.....');
+    await page.type("input[name='fld_passwd']", password, {
+      delay: 200,
+    });
+    await page.click("button[name='verifyPass']");
+    // get data
+  }
   console.log('CORRECT PASSWORD....');
 };
 
@@ -22,7 +24,7 @@ const login = async (page, url, password) => {
   try {
     // browser instance
     console.log('LAUNCHING BROWSER.....');
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
     const linkOfSendcm = prompt('Enter send.cm link: ');
     const password = prompt('Enter Password if is necessary : ');

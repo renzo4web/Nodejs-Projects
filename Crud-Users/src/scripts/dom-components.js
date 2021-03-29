@@ -1,17 +1,13 @@
-const div = document.createElement('div');
+const divBtn = document.createElement('div');
+const divResponse = document.createElement('div');
 
-const addToContainerDom = (elem) => {
+const addToContainerDom = (parent, elem) => {
 
-  div.classList.add('container');
-  div.innerHTML += elem;
-  document.body.appendChild(div);
+  parent.classList.add('container');
+  parent.innerHTML += elem;
+  document.body.appendChild(parent);
 
 };
-
-// #
-// email
-// nombre
-// avatar
 
 const createUserLisTable = (row) => {
 
@@ -32,7 +28,8 @@ const createUserLisTable = (row) => {
 
   `;
 
-  addToContainerDom(htmlTable);
+  addToContainerDom(divResponse, htmlTable);
+
 };
 
 const domInputId = () => {
@@ -46,8 +43,8 @@ const domInputId = () => {
    </form>
 
       `;
+  addToContainerDom(divResponse, html);
 
-  addToContainerDom(html);
 };
 
 const domPostUser = (updateUser) => {
@@ -75,7 +72,7 @@ const domPostUser = (updateUser) => {
 
       `;
 
-  addToContainerDom(html);
+  addToContainerDom(divResponse, html);
 };
 
 const createBtns = () => {
@@ -90,7 +87,13 @@ const createBtns = () => {
   </div>
   `;
 
-  addToContainerDom(html);
+  divBtn.classList.add('wrapper-btns');
+  document.body.appendChild(divBtn);
+  divResponse.classList.add('wrapper-response');
+
+  document.body.appendChild(divResponse);
+
+  addToContainerDom(divBtn, html);
 
 };
 
