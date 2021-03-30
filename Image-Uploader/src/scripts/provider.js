@@ -6,7 +6,7 @@ const uploadImage = async (img) => {
 
     const formdata = new FormData();
     formdata.append('upload_preset', 'swtztc0y');
-    formdata.append('file', img.files[0]);
+    formdata.append('file', img);
 
     const req = await fetch(hostImg, {
       method: 'POST',
@@ -14,11 +14,13 @@ const uploadImage = async (img) => {
       redirect: 'follow',
     });
     const {public_id, url} = await req.json();
-    return {public_id, url};
+    console.log();
+
+    return (req.ok) ? {public_id, url} : '';
 
   } catch (e) {
 
-    return 'File unvalid';
+    return 'File invalid';
 
   }
 
