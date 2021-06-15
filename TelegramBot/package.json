@@ -1,0 +1,34 @@
+{
+    "name": "telegrambot",
+    "version": "1.0.0",
+    "description": "A simple bot ",
+    "main": "Bot.js",
+    "type": "commonjs",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node Bot.js"
+    },
+    "keywords": [
+        "bot",
+        "telegram"
+    ],
+    "author": "Renzo",
+    "license": "MIT",
+    "devDependencies": {
+        "nodemon": "^2.0.7"
+    },
+    "engines": {
+        "node": "14.x"
+    },
+    "dependencies": {
+        "cheerio": "^1.0.0-rc.9",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.1",
+        "node-fetch": "^2.6.1",
+        "request": "^2.88.2",
+        "request-promise": "^4.2.6",
+        "scrape-it": "^5.3.1",
+        "telegraf": "^4.3.0",
+        "telegraf-inline-menu": "^6.2.1"
+    }
+}
